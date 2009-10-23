@@ -150,7 +150,7 @@
 	MORE
 
 		For more usage and examples, go to:
-		http://theproductguy.com/...
+		http://tpgblog.com/cutetime/
 
 ******************************************************************************************************/
 
