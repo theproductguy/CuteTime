@@ -6,7 +6,7 @@
 	Version 1.0
 	Date: 10/17/2009
 
-	Copyright (c) 2009 Jeremy Horn- jhorn(at)gmail(dot)c0m | http://tpgblog.com
+	Copyright (c) 2009 Jeremy Horn- jeremydhorn(at)gmail(dot)c0m | http://tpgblog.com
 	Dual licensed under MIT and GPL.
 
 	DESCRIPTION
