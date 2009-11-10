@@ -3,8 +3,8 @@
 	jQuery.cuteTime
 
 	Author Jeremy Horn
-	Version 1.0
-	Date: 10/17/2009
+	Version 1.0.5
+	Date: 11/10/2009
 
 	Copyright (c) 2009 Jeremy Horn- jeremydhorn(at)gmail(dot)c0m | http://tpgblog.com
 	Dual licensed under MIT and GPL.
@@ -56,12 +56,12 @@
 
 	METHODS
 
-		When initialized the cuteTime variable either updates or assigns the 'cutetime'
+		When initialized the cuteTime variable either updates or assigns the TS_ATTR
 		attribute to the provided objects.  Method implementation supports chaining and 
 		returns jQuery object.  
 
 			e.g.
-				<div class='timestamp' cutetime='2009 10 12 22:11:19'>2009 10 12 22:11:19</div>				
+				<div class='timestamp' data-timestamp='2009 10 12 22:11:19'>2009 10 12 22:11:19</div>				
 		
 		If the cutetime attribute already exists within the provided object, then the
 		text within the object is ignored in the cutification process.  If the cutetime attribute 
@@ -158,6 +158,7 @@
 	// CONSTANTS
 	var NEG_INF = Number.NEGATIVE_INFINITY;
 	var POS_INF = Number.POSITIVE_INFINITY;
+	var TS_ATTR	= 'data-timestamp';
 
 	/**********************************************************************************
 
@@ -180,8 +181,8 @@
 
 		// check for new & valid options
 		if ((typeof options == 'object') || (options == undefined)) {
-			// then update the settings
-			$.extend($.fn.cuteTime.settings, options);
+			// then update the settings [destructive]
+			$.fn.cuteTime.c_settings = $.extend({}, $.fn.cuteTime.settings, options);
 			$.fn.cuteTime.the_selected = this;
 
 			// process all provided objects
@@ -194,9 +195,9 @@
 
 			// check for and conditionally launch the automatic refreshing of timestamps
 			$.fn.cuteTime.start_cuteness();
-
-			return this;
 		}
+		
+		return this;
 	};
 
 	/**********************************************************************************
@@ -304,11 +305,11 @@
 
 	**********************************************************************************/
 	$.fn.cuteTime.start_cuteness = function() {
-		var refresh_rate = $.fn.cuteTime.settings.refresh;
+		var refresh_rate = $.fn.cuteTime.c_settings.refresh;
 
 		if ($.fn.cuteTime.process_tracker == null) {
 			if (refresh_rate > 0) {
-				$.fn.cuteTime.process_tracker = setInterval ( "$.fn.cuteTime.update_cuteness()", refresh_rate );
+				$.fn.cuteTime.process_tracker = setInterval( "$.fn.cuteTime.update_cuteness()", refresh_rate );
 			}
 		} else { 
 			// ignore this call; auto-refresh is already running!!
@@ -377,7 +378,7 @@
 
 	**********************************************************************************/
 	function get_cuteness(time_difference) {
-		var time_ranges = $.fn.cuteTime.settings.time_ranges;
+		var time_ranges = $.fn.cuteTime.c_settings.time_ranges;
 		var calculated_time;
 		var cute_time = '';
 
@@ -493,7 +494,7 @@
 
 	**********************************************************************************/
 	function get_cutetime_attr(obj) {
-		var return_value = obj.attr('cutetime');
+		var return_value = obj.attr(TS_ATTR);
 
 		if (return_value != undefined) {
 			return return_value;
@@ -517,7 +518,7 @@
 	**********************************************************************************/
 	function set_cutetime_attr(attr, obj) {
 		// assume valid attr(ibute) value
-		obj.attr('cutetime', attr);
+		obj.attr(TS_ATTR, attr);
 	}
 
 

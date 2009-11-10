@@ -17,7 +17,7 @@
 			// returns a cuter string of the passed in datetime
 			$('.predetermined').text(" -> "+$.cuteTime('2009/10/16 22:11:19'));
 
-			my_cutetime = $('.timestamp_move').cuteTime({ refresh: 60000*10 });
+			my_cutetime = $('.timestamp_move').cuteTime({ refresh: 10000 });
 		});  
 	</script>  
 </head>  
@@ -35,16 +35,16 @@
 		2018/11/01 07:11:00
 	</div>
 	<div class="timestamp"></div>
-	<div class="timestamp" cutetime="1980/10/12 22:11:19">  
+	<div class="timestamp" data-timestamp="1980/10/12 22:11:19">  
 		2009/10/12 22:11:19
 	</div>
-	<div class="timestamp" cutetime="asd">  
+	<div class="timestamp" data-timestamp="asd">  
 		10/12/2009 22:11:19
 	</div>
-	<div class="timestamp" cutetime="asd">
+	<div class="timestamp" data-timestamp="asd">
 		aoisd
 	</div>
-	<div class="timestamp" cutetime="asd"></div>
+	<div class="timestamp" data-timestamp="asd"></div>
 
 	<div class='predetermined'></div>
 
@@ -67,16 +67,16 @@
 	</div>
 	<div class="timestamp_move"></div>
 
-	<div class="timestamp_move" cutetime="1980 10 12 22:11:19">  
+	<div class="timestamp_move" data-timestamp="1980 10 12 22:11:19">  
 		2009/10/12 22:11:19
 	</div>
-	<div class="timestamp_move" cutetime="asd">  
+	<div class="timestamp_move" data-timestamp="asd">  
 		2009/10/12 22:11:19
 	</div>
-	<div class="timestamp_move" cutetime="asd">  
+	<div class="timestamp_move" data-timestamp="asd">  
 		aoisd
 	</div>
-	<div class="timestamp_move" cutetime="asd"></div>
+	<div class="timestamp_move" data-timestamp="asd"></div>
 
 
 

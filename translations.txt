@@ -1,0 +1,110 @@
+***********************************************************
+***********************************************************
+***********************************************************
+FILE: 
+
+	translations.txt
+
+
+PURPOSE:  
+
+	contains translations for variety of languages
+
+***********************************************************
+if you have a translation of the default ssttings in your 
+language and you would like to contribute to CuteTime, 
+please either ...
+
+		post comment of translation to 
+		http://tpgblog.com/cutetime/ 
+		
+		or
+
+		email me at jeremydhorn(at)gmail(dot)c0m
+***********************************************************
+
+USAGE:
+
+	$(‘.timestamp’).cuteTime(SETTINGS);
+
+	...where SETTINGS equals any of the following...
+
+***********************************************************
+
+DEFAULT:ENGLISH
+
+   SETTINGS = {
+		time_ranges: [
+			{bound: NEG_INF,	
+					cuteness: 'the future!',		unit_size: 0},
+			{bound: 0, 
+					cuteness: 'just now',			unit_size: 0},
+			{bound: 20 * 1000, 
+					cuteness: 'a few seconds ago',	unit_size: 0},
+			{bound: 60 * 1000, 
+					cuteness: 'a minute ago',		unit_size: 0},
+			{bound: 60 * 1000 * 2, 
+					cuteness: ' minutes ago',		unit_size: 60 * 1000},
+			{bound: 60 * 1000 * 60, 
+					cuteness: 'an hour ago',		unit_size: 0},
+			{bound: 60 * 1000 * 60 * 2, 
+					cuteness: ' hours ago',			unit_size: 60 * 1000 * 60},
+			{bound: 60 * 1000 * 60 * 24, 
+					cuteness: 'yesterday',			unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 2, 
+					cuteness: ' days ago',			unit_size: 60 * 1000 * 60 * 24},
+			{bound: 60 * 1000 * 60 * 24 * 30,	
+					cuteness: 'last month',			unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 2, 
+					cuteness: ' months ago',		unit_size: 60 * 1000 * 60 * 24 * 30},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 12, 
+					cuteness: 'last year',			unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 12 * 2, 
+					cuteness: ' years ago',			unit_size: 60 * 1000 * 60 * 24 * 30 * 12},
+			{bound: POS_INF, 
+					cuteness: 'a blinkle ago',		unit_size: 0}
+		]
+	};
+
+	
+Language: German
+
+	SETTINGS = {
+		time_ranges: [
+			{bound: NEG_INF,
+				cuteness: 'in der Zukunft!',		unit_size: 0},
+			{bound: 0,
+				cuteness: 'gerade jetzt',			unit_size: 0},
+			{bound: 20 * 1000,
+				cuteness: 'vor ein paar Sekunden',	unit_size: 0},
+			{bound: 60 * 1000,
+				cuteness: 'vor einer Minute',		unit_size: 0},
+			{bound: 60 * 1000 * 2,
+				cuteness: ' Minuten her',			unit_size: 60 * 1000},
+			{bound: 60 * 1000 * 60,
+				cuteness: 'vor einer Stunde', 		unit_size: 0},
+			{bound: 60 * 1000 * 60 * 2,
+				cuteness: ' Stunden her', 			unit_size: 60 * 1000 * 60},
+			{bound: 60 * 1000 * 60 * 24,
+				cuteness: 'Gestern', 				unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 2,
+				cuteness: ' Tage her', 				unit_size: 60 * 1000 * 60 * 24},
+			{bound: 60 * 1000 * 60 * 24 * 30,
+				cuteness: 'letzen Monat', 			unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 2,
+				cuteness: ' Monate her', 			unit_size: 60 * 1000 * 60 * 24 * 30},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 12,
+				cuteness: 'letztes Jahr', 			unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 12 * 2,
+				cuteness: ' Jahre her', 			unit_size: 60 * 1000 * 60 * 24 * 30 * 12},
+			{bound: POS_INF,
+				cuteness: 'vor langer Zeit', 		unit_size: 0}
+		]
+	});
+    
+
+          
+***********************************************************
+***********************************************************
+***********************************************************
+
