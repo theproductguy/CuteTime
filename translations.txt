@@ -67,7 +67,7 @@ DEFAULT:ENGLISH
 	};
 
 	
-Language: German
+Language: German (contributed by Vincent Rolfs)
 
 	SETTINGS = {
 		time_ranges: [
