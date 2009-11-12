@@ -6,6 +6,6 @@ Initial release.
 Version 1.0.5 - 2009.11.10
 [UPDATED] updated cutetime attribute to be HTML 5 custom attribute compatible and more flexible in the future; using data-timestamp and global constant TS_ATTR
 [UPDATED] test/demo HTML files to work with new TS_ATTR
-[UPDATE] minified version of javascript compiled with Google's Closure Tools (new)
+[UPDATE] minified version of javascript compiled with YUI Compressor (new)
 [FIXED] setting behavior is not as desired THEREFORE updated settings (temporarily) to be DESTRUCTIVE between updates
-[FEATURE] added translations.txt to act as repository for all language translations for the CuteTime cuteness translations
+[FEATURE] added translations.txt to act as repository for all language translations for the CuteTime cuteness translations (special thanks to Vincent Rolfs)
