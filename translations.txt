@@ -1,4 +1,4 @@
-***********************************************************
+﻿***********************************************************
 ***********************************************************
 ***********************************************************
 FILE: 
@@ -35,7 +35,7 @@ DEFAULT:ENGLISH
 
    SETTINGS = {
 		time_ranges: [
-			{bound: NEG_INF,	
+			{bound: Number.NEGATIVE_INFINITY,	
 					cuteness: 'the future!',		unit_size: 0},
 			{bound: 0, 
 					cuteness: 'just now',			unit_size: 0},
@@ -61,7 +61,7 @@ DEFAULT:ENGLISH
 					cuteness: 'last year',			unit_size: 0},
 			{bound: 60 * 1000 * 60 * 24 * 30 * 12 * 2, 
 					cuteness: ' years ago',			unit_size: 60 * 1000 * 60 * 24 * 30 * 12},
-			{bound: POS_INF, 
+			{bound: Number.POSITIVE_INFINITY, 
 					cuteness: 'a blinkle ago',		unit_size: 0}
 		]
 	};
@@ -71,7 +71,7 @@ Language: German (contributed by Vincent Rolfs)
 
 	SETTINGS = {
 		time_ranges: [
-			{bound: NEG_INF,
+			{bound: Number.NEGATIVE_INFINITY,
 				cuteness: 'in der Zukunft!',		unit_size: 0},
 			{bound: 0,
 				cuteness: 'gerade jetzt',			unit_size: 0},
@@ -97,13 +97,84 @@ Language: German (contributed by Vincent Rolfs)
 				cuteness: 'letztes Jahr', 			unit_size: 0},
 			{bound: 60 * 1000 * 60 * 24 * 30 * 12 * 2,
 				cuteness: ' Jahre her', 			unit_size: 60 * 1000 * 60 * 24 * 30 * 12},
-			{bound: POS_INF,
+			{bound: Number.POSITIVE_INFINITY,
 				cuteness: 'vor langer Zeit', 		unit_size: 0}
 		]
 	});
     
 
-          
+Language: Spanish (contributed by Alex Hernandez)
+
+	SETTINGS = {
+		time_ranges: [
+			{bound: Number.NEGATIVE_INFINITY,
+				cuteness: 'el futuro!',				unit_size: 0},
+			{bound: 0,
+				cuteness: 'en este momento',		unit_size: 0},
+			{bound: 20 * 1000,
+				cuteness: 'hace unos segundos',		unit_size: 0},
+			{bound: 60 * 1000,
+				cuteness: 'hace un minuto',			unit_size: 0},
+			{bound: 60 * 1000 * 2,
+				cuteness: ' minutos,				unit_size: 60 * 1000},
+			{bound: 60 * 1000 * 60,
+				cuteness: 'hace una hora atrás',	unit_size: 0},
+			{bound: 60 * 1000 * 60 * 2,
+				cuteness: ' horas',					unit_size: 60 * 1000 * 60},
+			{bound: 60 * 1000 * 60 * 24,
+				cuteness: 'ayer',					unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 2,
+				cuteness: ' días',					unit_size: 60 * 1000 * 60 * 24},
+			{bound: 60 * 1000 * 60 * 24 * 30,
+				cuteness: 'en el último mes',		unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 2,
+				cuteness: ' meses atrás',			unit_size: 60 * 1000 * 60 * 24 * 30},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 12,
+				cuteness: 'el año pasado',			unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 12 * 2,
+				cuteness: ' años',					unit_size: 60 * 1000 * 60 * 24 * 30 * 12},
+			{bound: Number.POSITIVE_INFINITY,
+				cuteness: 'hace rato',				unit_size: 0}
+		]
+	};
+
+Language: French (contributed by Bruno Morency)
+
+	SETTINGS = {
+		time_ranges: [
+			{bound: Number.NEGATIVE_INFINITY,	
+					cuteness: 'le futur!',							unit_size: 0},
+			{bound: 0, 
+					cuteness: 'maintenant',							unit_size: 0},
+			{bound: 20 * 1000, 
+					cuteness: 'il y a quelques secondes',			unit_size: 0},
+			{bound: 60 * 1000, 
+					cuteness: 'il y a une minute',					unit_size: 0},
+			{bound: 60 * 1000 * 2, 
+					cuteness: 'il y a %CT% minutes',				unit_size: 60 * 1000},
+			{bound: 60 * 1000 * 60, 
+					cuteness: 'il y a une heure',					unit_size: 0},
+			{bound: 60 * 1000 * 60 * 2, 
+					cuteness: 'il y a %CT% heures',					unit_size: 60 * 1000 * 60},
+			{bound: 60 * 1000 * 60 * 24, 
+					cuteness: 'hier',								unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 2, 
+					cuteness: 'il y a %CT% jours',					unit_size: 60 * 1000 * 60 * 24},
+			{bound: 60 * 1000 * 60 * 24 * 30,	
+					cuteness: 'le mois dernier',					unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 2, 
+					cuteness: 'il y a %CT% mois',					unit_size: 60 * 1000 * 60 * 24 * 30},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 12, 
+					cuteness: 'l\'ann&eacute;e derni&egrave;re',	unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 12 * 2, 
+					cuteness: 'il y a %CT% ans',					unit_size: 60 * 1000 * 60 * 24 * 30 * 12},
+			{bound: Number.POSITIVE_INFINITY, 
+					cuteness: 'il y a tr&egrave;s longtemps',		unit_size: 0}
+		]
+	};
+
+
+
 ***********************************************************
 ***********************************************************
 ***********************************************************

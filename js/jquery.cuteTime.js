@@ -3,8 +3,8 @@
 	jQuery.cuteTime
 
 	Author Jeremy Horn
-	Version 1.0.5
-	Date: 11/10/2009
+	Version 1.1
+	Date: 11/26/2009
 
 	Copyright (c) 2009 Jeremy Horn- jeremydhorn(at)gmail(dot)c0m | http://tpgblog.com
 	Dual licensed under MIT and GPL.
@@ -41,13 +41,13 @@
 	IMPLEMENTATION
 
 		$('.timestamp').cuteTime();
-		$('.timestamp').cuteTime({ /* OPTIONS * / });
+		$('.timestamp').cuteTime({ / * OPTIONS * / });
 		
 		cutetime_object = $('.timestamp').cuteTime();
 		cutetime_object.update_cuteness();
 
 		$.cuteTime('2009/10/12 22:11:19');
-
+		$.cuteTime({ / * OPTIONS * / }, '2009/10/12 22:11:19');
 
 	COMPATIBILITY
 
@@ -105,6 +105,11 @@
 						time_ranges array
 
 			cuteness:	string to use in place of the current timestamp
+						
+						the special keyword %CT% can be used within the cutetime string to 
+						override the prepending of the calculated difference, when called for
+						
+							e.g. "it was %CT% hours ago"   
 			
 			unit_size:	the divisor to apply to the calculated time difference; if unit_size > 0
 						then a number value is prepended to the cuteness string as calculated by
@@ -143,6 +148,12 @@
 		2009 10 12 22:11:19											* only works in FF
 		10 15 2009 22:11:19											* only works in FF
 
+		ALL ISO8601 Date/Time Formats Also Supported
+		2009-11-24T19:20:30+01:00
+		2009-11
+		2009-11-24T13:15:30Z
+		...etc...
+		
 		* if the TIMESTAMP can be recognized by the JavaScript Date() Object then it is VALID 
 		  (i.e. if it can be parsed by Date.parse())
 		** IE date parsing is VERY DIFFERENT (and more limiting) than FF :-(  [not cute!]
@@ -190,7 +201,7 @@
 				// element-specific code here
 				curr_this = $(this);
 				other_time = get_time_value(curr_this);
-				curr_this.text(get_cuteness(right_now - other_time));
+				curr_this.html(get_cuteness(right_now - other_time));
 			});
 
 			// check for and conditionally launch the automatic refreshing of timestamps
@@ -212,35 +223,44 @@
 			returns a string version of its equivalent cutetime
 			
 				e.g. $.cuteTime('2009 10 12 22:11:19');
+				
+				or
+				
+				e.g. $.cuteTime(SETTINGS, '2009 10 12 22:11:19');
 
 			can be customized by directly accessing the settings:
 				$.fn.cuteTime.settings = ...
 
-		TODO
-			allow for easier customization of cuteTime settings
-
 	**********************************************************************************/
-	$.cuteTime = function(options) {
+	$.cuteTime = function(options, val) {
 		var right_now = new Date().getTime();
 		var other_time;
 		var curr_this;
+		var ts_string = null;
+
+		if (typeof options == 'object') {
+			$.fn.cuteTime.c_settings = $.extend({}, $.fn.cuteTime.settings, options);
+		} 
 
 		if (typeof options == 'string') {
-			// then we will be returring a cutetime string and doing nothing else
-			other_time = date_value(options);
+			ts_string = options;
+		} else if (typeof val == 'string') {
+			ts_string = val;	
+		}
+	
+		if (ts_string != null) {
+			// then we will be returning a cutetime string and doing nothing else
+			other_time = date_value(ts_string);
 			if (!isNaN(other_time)) {
 				return get_cuteness(right_now - other_time);
 			} else {
 				// on failure return error message
-				return 'INVALID DATE/TIME FORMAT';
+				return 'INVALID_DATETIME_FORMAT';
 			}
 		}
 
 		return this;
 	};
-
-
-	//////////////////////////////////////////////////////////////////////////////////
 
 
 	/**********************************************************************************
@@ -335,7 +355,7 @@
 		$.fn.cuteTime.the_selected.each(function() {
 			curr_this = $(this);
 			other_time = get_time_value(curr_this);
-			curr_this.text(get_cuteness(right_now - other_time));
+			curr_this.html(get_cuteness(right_now - other_time));
 		});
 	}
 
@@ -373,13 +393,20 @@
 		DESCRIPTION
 			based on passed in time_difference (in milliseconds) returns a string
 			of the associated cuteness
+			
+			if a number should be insterted into the string (unit_size not empty)
+				THEN
+					if %CT% exists within the cuteness STRING 
+						THEN replace it with the calculated number
+						ELSE prepend the calculated number to the front of the string
+						     (mostly for backwards compatibility) 
 
 			ON ERROR returns time in 'pookies'
 
 	**********************************************************************************/
 	function get_cuteness(time_difference) {
 		var time_ranges = $.fn.cuteTime.c_settings.time_ranges;
-		var calculated_time;
+		var pre_calculated_time, calculated_time;
 		var cute_time = '';
 
 		jQuery.each(time_ranges, function(i, timespan) {
@@ -392,7 +419,18 @@
 						calculated_time = '';
 					}
 
-					cute_time = calculated_time + timespan['cuteness'];
+					// allow for inline replacement
+					pre_calculated_time = timespan['cuteness'].replace(/%CT%/, calculated_time);
+					
+					if (pre_calculated_time == timespan['cuteness']) {
+						// nothing was replaced
+						// prepend the value
+						cute_time = calculated_time + timespan['cuteness'];
+						
+					} else {
+						// inline replacement occurred
+						cute_time = pre_calculated_time;
+					}
 
 					return false;
 				}
@@ -418,21 +456,147 @@
 		DESCRIPTION
 			returns the date in time measured since 1970 (see definition of Date.valueOf)
 
-			performs minimal date correction to expand the range of VALID date formats
+			if not ISO 8601 date format compliant, performs minimal date correction 
+			to expand the range of VALID date formats
 
 	**********************************************************************************/
 	function date_value(the_date) {
 	
-		var the_value = (new Date(the_date)).valueOf();
-
-		if (isNaN(the_value)) {
-			// then the date must be the alternate db styled format
-			the_value = new Date(the_date.replace(/-/g, " "));
+		var the_value;
+	
+		if ((new_date = toISO8601(the_date)) != null) {
+			the_value = new_date.valueOf();
+		} else {
+		
+			the_value = (new Date(the_date)).valueOf();
+			
+			if (isNaN(the_value)) {
+				// then the date must be the alternate db styled format
+				the_value = new Date(the_date.replace(/-/g, " "));
+			}
 		}
-
 		return the_value;
 	}
 
+
+	/**********************************************************************************
+
+		FUNCTION
+			toISO8601
+
+		DESCRIPTION
+			converts an ISO8601 formatted timestamp to the JavaScript Date() Object
+			if the provided string is not in ISO8601 format, then null is returned
+
+			** Note to people who copy this function:  If you like it, if you use it,
+			please provide credit to Jeremy Horn, The Product Guy @ http://tpgblog.com
+			and the jQuery CuteTime Plugin @ http://tpgblog.com/cutetime;  Thanks. :-)
+
+			ISO8601
+			http://www.w3.org/TR/NOTE-datetime
+			  
+				Year:
+				  YYYY (eg 1997)
+				Year and month:
+				  YYYY-MM (eg 1997-07)
+				Complete date:
+				  YYYY-MM-DD (eg 1997-07-16)
+				Complete date plus hours and minutes:
+				  YYYY-MM-DDThh:mmTZD (eg 1997-07-16T19:20+01:00)
+				Complete date plus hours, minutes and seconds:
+				  YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)
+				Complete date plus hours, minutes, seconds and a decimal fraction of a second
+				  YYYY-MM-DDThh:mm:ss.sTZD (eg 1997-07-16T19:20:30.45+01:00)
+			
+			  	Formatted REGEXP used within...
+			  	
+					/^(\d{4})(
+					    (-(\d{2})
+					        (-(\d{2})
+					            (T(\d{2}):(\d{2})
+					                (:(\d{2})
+					                    (.(\d+))?
+					                )?
+					                (Z|(
+					                    ([+-])((\d{2}):(\d{2}))
+					                ))
+					            )?
+					        )?
+					    )?
+					)$/
+					
+		NOTE
+			String.match() returns:
+				in FireFox, 			void(0) 
+				in Internet Explorer, 	"" <-- empty string
+			... for unmatched elements within the array
+			
+	**********************************************************************************/
+	function toISO8601(the_date){
+	
+		var iso_date = the_date.match(/^(\d{4})((-(\d{2})(-(\d{2})(T(\d{2}):(\d{2})(:(\d{2})(.(\d+))?)?(Z|(([+-])((\d{2}):(\d{2})))))?)?)?)$/);
+		
+		if (iso_date != null) {
+			var new_date = new Date();
+			var TZ_hour_offset = 0;
+			var TZ_minute_offset = 0;
+			
+			new_date.setUTCFullYear(iso_date[1]);
+			if (!isEmpty(iso_date[4])) {
+				new_date.setUTCMonth(iso_date[4] - 1);
+				if (!isEmpty(iso_date[6])) {
+					new_date.setUTCDate(iso_date[6]);
+					
+					// check TZ first
+					if (!isEmpty(iso_date[16])) {
+						TZ_hour_offset = iso_date[18];
+						TZ_minute_offset = iso_date[19];
+						
+						if (!isEmpty(iso_date[16])) {
+							TZ_hour_offset *= -1;
+							TZ_minute_offset *= -1;
+						}
+					}
+					
+					if (!isEmpty(iso_date[8])) {
+						new_date.setUTCHours(iso_date[8] - TZ_hour_offset);
+						new_date.setUTCMinutes(iso_date[9] - TZ_minute_offset)
+						if (!isEmpty(iso_date[11])) {
+							new_date.setUTCSeconds(iso_date[11]);
+							if (!isEmpty(iso_date[13])) {
+								new_date.setUTCMilliseconds(iso_date[13]*1000);
+							}
+						}
+					}
+					
+				}
+			}
+
+			return new_date;
+		} else {
+			return null;
+		}
+	}
+
+
+	/**********************************************************************************
+
+		FUNCTION
+			isEmpty
+
+		DESCRIPTION
+			determines whether or not the passed in string is EMPTY
+			
+			EMPTY = null OR "" {EMPTY STRING}
+
+	**********************************************************************************/
+	function isEmpty( inputStr ) { 
+		if ( null == inputStr || "" == inputStr ) { 
+			return true; 
+		} 
+		
+		return false; 
+	}
 
 	/**********************************************************************************
 
