@@ -173,6 +173,44 @@ Language: French (contributed by Bruno Morency)
 		]
 	};
 
+Language: Russian (contributed by Jansen Price)
+
+	SETTINGS = {
+		time_ranges: [
+			{bound: NEG_INF,
+					cuteness: 'в будущее!',							unit_size: 0},
+			{bound: 0,
+					cuteness: 'сейчас',								unit_size: 0},
+			{bound: 20 * 1000,
+					cuteness: 'несколько секундов назад',			unit_size: 0},
+			{bound: 60 * 1000,
+					cuteness: 'около минуты назад',					unit_size: 0},
+			{bound: 60 * 1000 * 2,
+					cuteness: 'мин. назад',							unit_size: 60 * 1000},
+			{bound: 60 * 1000 * 60,
+					cuteness: 'около часа назад',					unit_size: 0},
+			{bound: 60 * 1000 * 60 * 2,
+					cuteness: 'ч. назад',							unit_size: 60 * 1000 * 60},
+			{bound: 60 * 1000 * 60 * 24,
+					cuteness: 'вчера',								unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 2,
+					cuteness: 'дн. назад',							unit_size: 60 * 1000 * 60 * 24},
+			{bound: 60 * 1000 * 60 * 24 * 30,
+					cuteness: 'в прошлом месяце',					unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 2,
+					cuteness: 'месяца назад',						unit_size: 60 * 1000 * 60 * 24 * 30},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 5,
+					cuteness: 'месяцев назад',						unit_size: 60 * 1000 * 60 * 24 * 30},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 12,
+					cuteness: 'в прошлом году',						unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 12 * 2,
+					cuteness: 'года назад',							unit_size: 60 * 1000 * 60 * 24 * 30 * 12},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 12 * 5,
+					cuteness: 'лет назад',							unit_size: 60 * 1000 * 60 * 24 * 30 * 12},
+			{bound: POS_INF,
+					cuteness: 'давно',								unit_size: 0}
+		]
+	};
 
 
 ***********************************************************

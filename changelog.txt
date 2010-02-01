@@ -23,3 +23,6 @@ Version 1.1 - 2009.11.26
 [FEATURE] added French time translation to the translations.txt file (courtesy of Bruno Morency)
 [FIXED] documentation to indicate that Number.NEGATIVE_INFINITY and Number.POSTIVE_INFINITY should be used within the bounds
 [TODO] support more than 1 refresh timer per page [use jQuery.data()]
+
+Version 1.1.1 - 2010.02.01
+[FEATURE] added Russian time translation to the translations.txt file (courtesy of Jansen Price)
