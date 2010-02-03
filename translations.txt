@@ -212,6 +212,42 @@ Language: Russian (contributed by Jansen Price)
 		]
 	};
 
+Language: Portuguese (contributed by Carlos Moutinho)
+
+	SETTINGS = {
+		time_ranges: [
+			{bound: Number.NEGATIVE_INFINITY,
+				cuteness: 'o futuro!',						unit_size: 0},
+			{bound: 0,
+				cuteness: 'agora mesmo',					unit_size: 0},
+			{bound: 20 * 1000,
+				cuteness: 'há uns segundos',				unit_size: 0},
+			{bound: 60 * 1000,
+				cuteness: 'há um minuto',					unit_size: 0},
+			{bound: 60 * 1000 * 2,
+				cuteness: 'há %CT% minutos',				unit_size: 60 * 1000},
+			{bound: 60 * 1000 * 60,
+				cuteness: 'acerca de há uma hora atrás',	unit_size: 0},
+			{bound: 60 * 1000 * 60 * 2,
+				cuteness: 'há %CT% horas atrás',			unit_size: 60 * 1000 * 60},
+			{bound: 60 * 1000 * 60 * 24,
+				cuteness: 'ontem',							unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 2,
+				cuteness: 'há %CT% dias',					unit_size: 60 * 1000 * 60 * 24},
+			{bound: 60 * 1000 * 60 * 24 * 30,
+				cuteness: 'no mês passado',					unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 2,
+				cuteness: 'há %CT% meses atrás',			unit_size: 60 * 1000 * 60 * 24 * 30},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 12,
+				cuteness: 'no ano passado',					unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 12 * 2,
+				cuteness: 'há %CT% anos',					unit_size: 60 * 1000 * 60 * 24 * 30 * 12},
+			{bound: Number.POSITIVE_INFINITY,
+				cuteness: 'há bué tempo',					unit_size: 0}
+		]
+	};
+
+
 
 ***********************************************************
 ***********************************************************

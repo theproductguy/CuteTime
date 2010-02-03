@@ -26,3 +26,6 @@ Version 1.1 - 2009.11.26
 
 Version 1.1.1 - 2010.02.01
 [FEATURE] added Russian time translation to the translations.txt file (courtesy of Jansen Price)
+
+Version 1.1.2 - 2010.02.03
+[FEATURE] added Portuguese time translation to the translations.txt file (courtesy of Carlos Moutinho)
