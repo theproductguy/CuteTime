@@ -31,4 +31,7 @@ Version 1.1.2 - 2010.02.03
 [FEATURE] added Portuguese time translation to the translations.txt file (courtesy of Carlos Moutinho)
 
 Version 1.1.3 - 2010.04.06
-[FIXED] bug whereby non-negative UTC offsets were appearing in 'the future!' (thanks to Sébastien Roger) 
+[FIXED] bug whereby non-negative UTC offsets were appearing in 'the future!' (thanks to Sébastien Roger)
+
+Version 1.1.4 - 2010.04.19
+[FEATURE] added Castilian Spanish (es_ES) (contributed by Raul Raja) 

@@ -138,6 +138,41 @@ Language: Spanish (contributed by Alex Hernandez)
 		]
 	};
 
+Language: Castilian Spanish (es_ES) (contributed by Raul Raja)
+
+	SETTINGS = {
+		time_ranges: [
+			{bound: Number.NEGATIVE_INFINITY, 
+				cuteness: '¡En el futuro!', unit_size: 0},
+			{bound: 0, 
+				cuteness: 'ahora mismo', unit_size: 0},
+			{bound: 20 * 1000, 
+				cuteness: 'hace unos segundos', unit_size: 0},
+			{bound: 60 * 1000,  
+				cuteness: 'hace un minuto', unit_size: 0},
+			{bound: 60 * 1000 * 2, 
+				cuteness: 'hace %CT% minutos', unit_size: 60 * 1000},
+			{bound: 60 * 1000 * 60, 
+				cuteness: 'hace una hora', unit_size: 0},
+			{bound: 60 * 1000 * 60 * 2, 
+				cuteness: 'hace %CT% horas', unit_size: 60 * 1000 * 60},
+			{bound: 60 * 1000 * 60 * 24, 
+				cuteness: 'ayer',  unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 2, 
+				cuteness: 'hace %CT% días',    unit_size: 60 * 1000 * 60 * 24},
+			{bound: 60 * 1000 * 60 * 24 * 30, 
+				cuteness: 'el mes pasado', unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 2, 
+				cuteness: 'hace %CT% meses', unit_size: 60 * 1000 * 60 * 24 * 30},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 12, 
+				cuteness: 'el año pasado', unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 12 * 2, 
+				cuteness: 'hace %CT% años', unit_size: 60 * 1000 * 60 * 24 * 30 * 12},
+			{bound: Number.POSITIVE_INFINITY, 
+				cuteness: 'algún día en el futuro', unit_size: 0}
+		]
+	};
+
 Language: French (contributed by Bruno Morency)
 
 	SETTINGS = {

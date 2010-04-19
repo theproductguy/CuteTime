@@ -623,7 +623,7 @@
 	function get_time_value(obj) {
 		var time_value = Number.NaN;
 
-		time_string = get_cutetime_attr(obj); // returns string or NULL
+		var time_string = get_cutetime_attr(obj); // returns string or NULL
 		if (time_string != null) {
 			time_value = date_value(time_string);
 		}
