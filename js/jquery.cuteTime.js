@@ -74,6 +74,9 @@
 		If neither cutetime attibute nor valid object text exist then the timestamp is assumed 
 		to by 'now'.
 
+		However, CuteTime can operate without using the data-timestamp attribute (and by instead
+		using jQuery().data()).
+
 		stop_cuteness()
 			stops all automatic updates of refresh enabled timestamps
 
@@ -94,6 +97,8 @@
 		e.g. $('.ts2').cuteTime({ refresh: 60000 });
 		
 		refresh:		time in milliseconds before next refresh of page data; -1 == no refresh
+		use_html_attribute:	Whether the data-cutetime HTML attribute should be used. Defaults to true.
+					Set to false to disable this behavior and use jQuery().data() instead.
 		time_ranges:	array of bound_structures definining the cute descriptions associated with
 						time ranges
 
@@ -277,6 +282,7 @@
 	**********************************************************************************/
 	$.fn.cuteTime.settings = {
 		refresh: -1,					// time in milliseconds before next refresh of page data; -1 == no refresh
+		use_html_attribute: true,			// Whether or not to set/access the data-cutetime attribute.
 		time_ranges: [
 			{bound: NEG_INF,			// IMPORANT: bounds MUST be in ascending order, from negative infinity to positive infinity
 					cuteness: 'the future!',		unit_size: 0},
@@ -604,9 +610,10 @@
 			get_time_value
 
 		DESCRIPTION
-			get the time value specified either in the text or the cuteime attribute 
+			get the time value specified either in the text or the cutetime attribute 
 			of the object and update the cutetime attribute whether initially present
-			or not
+			or not. Or, if options.use_html_attribute is set to false, use jQuery().data()
+			to store/access the value.
 
 			If the cutetime attribute already exists within the provided object, 
 				then the text within the object is ignored in the cutification 
@@ -658,7 +665,13 @@
 
 	**********************************************************************************/
 	function get_cutetime_attr(obj) {
-		var return_value = obj.attr(TS_ATTR);
+		var use_html_attribute = $.fn.cuteTime.c_settings.use_html_attribute;
+		var return_value = null;
+
+		if (use_html_attribute)
+			return_value = obj.attr(TS_ATTR);
+		else
+			return_value = obj.data('cutetime');
 
 		if (return_value != undefined) {
 			return return_value;
@@ -681,8 +694,12 @@
 
 	**********************************************************************************/
 	function set_cutetime_attr(attr, obj) {
-		// assume valid attr(ibute) value
-		obj.attr(TS_ATTR, attr);
+		var use_html_attribute = $.fn.cuteTime.c_settings.use_html_attribute;
+		if (use_html_attribute)
+			// assume valid attr(ibute) value
+			obj.attr(TS_ATTR, attr);
+		else
+			obj.data('cutetime', attr);
 	}
 
 
