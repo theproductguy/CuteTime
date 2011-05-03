@@ -111,7 +111,7 @@
 						
 							e.g. "it was %CT% hours ago"   
 			
-			unit_size:	the divisor to apply to the calculated time difference; if unit_size > 0
+			unit_size:	the divisor to apply to the calculated time difference; if unit_size != 0
 						then a number value is prepended to the cuteness string as calculated by
 						time_difference / unit_size
 							e.g. 4 hours ago
