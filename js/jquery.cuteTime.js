@@ -276,26 +276,31 @@
 
 	**********************************************************************************/
 	$.fn.cuteTime.settings = {
-		refresh: -1,					// time in milliseconds before next refresh of page data; -1 == no refresh
+		refresh: -1,	// time in milliseconds before next refresh of page data; -1 == no refresh
 		time_ranges: [
+            // ranges are matched to the range whose bound is LOWER than the
+            // time difference. This makes the logic for matching future dates
+            // confusing since they will have a negative time difference.  This
+            // means that the cuteness and unit_size for negative dates must be
+            // shifted back one range each.
 			{bound: NEG_INF,
-					cuteness: 'way in the future!', unit_size: 0},
-			{bound: -60 * 1000 * 60 * 24 * 30 * 12 * 2, 
 					cuteness: 'in %CT% years',		unit_size: -60 * 1000 * 60 * 24 * 30 * 12},
-			{bound: -60 * 1000 * 60 * 24 * 30 * 12, 
+			{bound: -60 * 1000 * 60 * 24 * 30 * 12 * 2, 
 					cuteness: 'next year',			unit_size: 0},
-			{bound: -60 * 1000 * 60 * 24 * 2, 
+			{bound: -60 * 1000 * 60 * 24 * 30 * 12, 
 					cuteness: 'in %CT% days',		unit_size: -60 * 1000 * 60 * 24},
-			{bound: -60 * 1000 * 60 * 2, 
+			{bound: -60 * 1000 * 60 * 24 * 2, 
 					cuteness: 'in %CT% hours',		unit_size: -60 * 1000 * 60},
-			{bound: -60 * 1000 * 60, 
+			{bound: -60 * 1000 * 60 * 2, 
 					cuteness: 'in an hour',		    unit_size: 0},
-			{bound: -60 * 1000 * 2, 
+			{bound: -60 * 1000 * 60, 
 					cuteness: 'in %CT% minutes',	unit_size: -60 * 1000},
-			{bound: -60 * 1000, 
+			{bound: -60 * 1000 * 2, 
 					cuteness: 'in a minute',		unit_size: 0},
-			{bound: -20 * 1000, 
+			{bound: -60 * 1000, 
 					cuteness: 'in a few seconds',	unit_size: 0},
+			{bound: -20 * 1000, 
+					cuteness: 'just now',			unit_size: 0},
 			{bound: 0, 
 					cuteness: 'just now',			unit_size: 0},
 			{bound: 20 * 1000, 
