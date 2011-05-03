@@ -278,8 +278,24 @@
 	$.fn.cuteTime.settings = {
 		refresh: -1,					// time in milliseconds before next refresh of page data; -1 == no refresh
 		time_ranges: [
-			{bound: NEG_INF,			// IMPORANT: bounds MUST be in ascending order, from negative infinity to positive infinity
-					cuteness: 'the future!',		unit_size: 0},
+			{bound: NEG_INF,
+					cuteness: 'way in the future!', unit_size: 0},
+			{bound: -60 * 1000 * 60 * 24 * 30 * 12 * 2, 
+					cuteness: 'in %CT% years',		unit_size: -60 * 1000 * 60 * 24 * 30 * 12},
+			{bound: -60 * 1000 * 60 * 24 * 30 * 12, 
+					cuteness: 'next year',			unit_size: 0},
+			{bound: -60 * 1000 * 60 * 24 * 2, 
+					cuteness: 'in %CT% days',		unit_size: -60 * 1000 * 60 * 24},
+			{bound: -60 * 1000 * 60 * 2, 
+					cuteness: 'in %CT% hours',		unit_size: -60 * 1000 * 60},
+			{bound: -60 * 1000 * 60, 
+					cuteness: 'in an hour',		    unit_size: 0},
+			{bound: -60 * 1000 * 2, 
+					cuteness: 'in %CT% minutes',	unit_size: -60 * 1000},
+			{bound: -60 * 1000, 
+					cuteness: 'in a minute',		unit_size: 0},
+			{bound: -20 * 1000, 
+					cuteness: 'in a few seconds',	unit_size: 0},
 			{bound: 0, 
 					cuteness: 'just now',			unit_size: 0},
 			{bound: 20 * 1000, 
@@ -413,7 +429,7 @@
 			if (i < time_ranges.length-1) {
 				if ((	time_difference		>=		timespan['bound']) &&
 					(	time_difference		<		time_ranges[i+1]['bound'])) {
-					if (timespan['unit_size'] > 0) {
+					if (timespan['unit_size'] != 0) {
 						calculated_time = Math.floor(time_difference / timespan['unit_size']);
 					} else {
 						calculated_time = '';
