@@ -56,7 +56,7 @@
 
 	METHODS
 
-		When initialized the cuteTime variable either updates or assigns the TS_ATTR
+		When initialized the cuteTime variable either updates or assigns the ts_attr
 		attribute to the provided objects.  Method implementation supports chaining and 
 		returns jQuery object.  
 
@@ -169,7 +169,6 @@
 	// CONSTANTS
 	var NEG_INF = Number.NEGATIVE_INFINITY;
 	var POS_INF = Number.POSITIVE_INFINITY;
-	var TS_ATTR	= 'data-timestamp';
 
 	/**********************************************************************************
 
@@ -276,6 +275,7 @@
 
 	**********************************************************************************/
 	$.fn.cuteTime.settings = {
+		ts_attr: 'data-timestamp',
 		refresh: -1,					// time in milliseconds before next refresh of page data; -1 == no refresh
 		time_ranges: [
 			{bound: NEG_INF,			// IMPORANT: bounds MUST be in ascending order, from negative infinity to positive infinity
@@ -660,7 +660,7 @@
 
 	**********************************************************************************/
 	function get_cutetime_attr(obj) {
-		var return_value = obj.attr(TS_ATTR);
+		var return_value = obj.attr($.fn.cuteTime.c_settings.ts_attr);
 
 		if (return_value != undefined) {
 			return return_value;
@@ -684,7 +684,7 @@
 	**********************************************************************************/
 	function set_cutetime_attr(attr, obj) {
 		// assume valid attr(ibute) value
-		obj.attr(TS_ATTR, attr);
+		obj.attr($.fn.cuteTime.c_settings.ts_attr, attr);
 	}
 
 
