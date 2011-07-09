@@ -505,6 +505,8 @@
 				  YYYY-MM-DDThh:mmTZD (eg 1997-07-16T19:20+01:00)
 				Complete date plus hours, minutes and seconds:
 				  YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)
+				Complete date plus hours, minutes and seconds in DATE_ISO8601 format from PHP:
+				  YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+0100)
 				Complete date plus hours, minutes, seconds and a decimal fraction of a second
 				  YYYY-MM-DDThh:mm:ss.sTZD (eg 1997-07-16T19:20:30.45+01:00)
 			
@@ -518,7 +520,7 @@
 					                    (.(\d+))?
 					                )?
 					                (Z|(
-					                    ([+-])((\d{2}):(\d{2}))
+					                    ([+-])((\d{2}):?(\d{2}))
 					                ))
 					            )?
 					        )?
@@ -534,7 +536,7 @@
 	**********************************************************************************/
 	function toISO8601(the_date){
 	
-		var iso_date = the_date.match(/^(\d{4})((-(\d{2})(-(\d{2})(T(\d{2}):(\d{2})(:(\d{2})(.(\d+))?)?(Z|(([+-])((\d{2}):(\d{2})))))?)?)?)$/);
+		var iso_date = the_date.match(/^(\d{4})((-(\d{2})(-(\d{2})(T(\d{2}):(\d{2})(:(\d{2})(.(\d+))?)?(Z|(([+-])((\d{2}):?(\d{2})))))?)?)?)$/);
 		
 		if (iso_date != null) {
 			var new_date = new Date();
