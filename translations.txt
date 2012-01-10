@@ -282,6 +282,41 @@ Language: Portuguese (contributed by Carlos Moutinho)
 		]
 	};
 
+Language: Turkish (contributed by Fatih AYTAÇ)
+
+   SETTINGS = {
+		time_ranges: [
+			{bound: Number.NEGATIVE_INFINITY,	
+					cuteness: 'gelecekte!',		unit_size: 0},
+			{bound: 0, 
+					cuteness: 'az önce',			unit_size: 0},
+			{bound: 20 * 1000, 
+					cuteness: 'birkaç saniye önce',	unit_size: 0},
+			{bound: 60 * 1000, 
+					cuteness: 'bir dakika önce',		unit_size: 0},
+			{bound: 60 * 1000 * 2, 
+					cuteness: ' dakika önce',		unit_size: 60 * 1000},
+			{bound: 60 * 1000 * 60, 
+					cuteness: 'bir saat önce',		unit_size: 0},
+			{bound: 60 * 1000 * 60 * 2, 
+					cuteness: ' saat önce',			unit_size: 60 * 1000 * 60},
+			{bound: 60 * 1000 * 60 * 24, 
+					cuteness: 'dün',			unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 2, 
+					cuteness: ' gün önce',			unit_size: 60 * 1000 * 60 * 24},
+			{bound: 60 * 1000 * 60 * 24 * 30,	
+					cuteness: 'geçen ay',			unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 2, 
+					cuteness: ' ay önce',		unit_size: 60 * 1000 * 60 * 24 * 30},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 12, 
+					cuteness: 'geçen yıl',			unit_size: 0},
+			{bound: 60 * 1000 * 60 * 24 * 30 * 12 * 2, 
+					cuteness: ' yıl önce',			unit_size: 60 * 1000 * 60 * 24 * 30 * 12},
+			{bound: Number.POSITIVE_INFINITY, 
+					cuteness: 'yıllar önce',		unit_size: 0}
+		]
+	};
+
 
 
 ***********************************************************
