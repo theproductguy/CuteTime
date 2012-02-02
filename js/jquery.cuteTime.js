@@ -315,26 +315,23 @@
 			cuteTime.start_cuteness
 
 		DESCRIPTION
-			activates the recurring process to update the objects' timestamps
+			Activates or updates repeatedly processing the objects' timestamps.
 
-			IMPORTANT: make sure refresh has been set to > 0
-
-		TODO
-			allow for the specifying of a new refresh rate when this function is called
+			The minimum refresh rate is one second. Nobody needs more than that.
 
 	**********************************************************************************/
-	$.fn.cuteTime.start_cuteness = function() {
+	$.fn.cuteTime.start_cuteness = function(opt_refresh) {
 		var refresh_rate = $.fn.cuteTime.c_settings.refresh;
+        if (opt_refresh !== undefined)
+            refresh_rate = opt_refresh;
+            
+        if (refresh_rate < 1000)
+            refresh_rate = 1000;
 
-		if ($.fn.cuteTime.process_tracker === null) {
-			if (refresh_rate > 0) {
-				$.fn.cuteTime.process_tracker = setInterval(
-                    $.proxy($.fn.cuteTime.update_cuteness, this),
-                    refresh_rate );
-			}
-		} else { 
-			// ignore this call; auto-refresh is already running!!
-		}
+        clearInterval($.fn.cuteTime.process_tracker);
+		$.fn.cuteTime.process_tracker = setInterval(
+            $.proxy($.fn.cuteTime.update_cuteness, this),
+            refresh_rate);
 		return this;
 	};
 
@@ -371,12 +368,8 @@
 
 	**********************************************************************************/
 	$.fn.cuteTime.stop_cuteness = function() {
-		if ($.fn.cuteTime.process_tracker !== null) {
-			clearInterval($.fn.cuteTime.process_tracker);
-			$.fn.cuteTime.process_tracker = null;
-		} else {
-			// ignore this call; there is nothing to stop!!
-		}
+		clearInterval($.fn.cuteTime.process_tracker);
+		$.fn.cuteTime.process_tracker = null;
 		
 		return this;
 	};
