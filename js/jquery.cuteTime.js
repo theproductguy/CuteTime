@@ -462,7 +462,7 @@
 	**********************************************************************************/
 	function date_value(the_date) {
 	
-		var the_value;
+		var the_value, new_date;
 	
 		if ((new_date = toISO8601(the_date)) != null) {
 			the_value = new_date.valueOf();
