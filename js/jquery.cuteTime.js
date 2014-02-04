@@ -191,7 +191,7 @@
 		var curr_this;
 
 		// check for new & valid options
-		if ((typeof options == 'object') || (options == undefined)) {
+		if ((typeof options == 'object') || (options === undefined)) {
 			// then update the settings [destructive]
 			$.fn.cuteTime.c_settings = $.extend({}, $.fn.cuteTime.settings, options);
 			$.fn.cuteTime.the_selected = this;
@@ -235,7 +235,6 @@
 	$.cuteTime = function(options, val) {
 		var right_now = new Date().getTime();
 		var other_time;
-		var curr_this;
 		var ts_string = null;
 
 		if (typeof options == 'object') {
@@ -248,7 +247,7 @@
 			ts_string = val;	
 		}
 	
-		if (ts_string != null) {
+		if (ts_string !== null) {
 			// then we will be returning a cutetime string and doing nothing else
 			other_time = date_value(ts_string);
 			if (!isNaN(other_time)) {
@@ -316,29 +315,28 @@
 			cuteTime.start_cuteness
 
 		DESCRIPTION
-			activates the recurring process to update the objects' timestamps
+			Activates or updates repeatedly processing the objects' timestamps.
 
-			IMPORTANT: make sure refresh has been set to > 0
-
-		TODO
-			allow for the specifying of a new refresh rate when this function is called
+			The minimum refresh rate is one second. Nobody needs more than that.
 
 	**********************************************************************************/
-	$.fn.cuteTime.start_cuteness = function() {
+	$.fn.cuteTime.start_cuteness = function(opt_refresh) {
 		var refresh_rate = $.fn.cuteTime.c_settings.refresh;
+        if (opt_refresh !== undefined)
+            refresh_rate = opt_refresh;
+            
+        if (refresh_rate < 1000)
+            refresh_rate = 1000;
 
-		if ($.fn.cuteTime.process_tracker == null) {
-			if (refresh_rate > 0) {
-				$.fn.cuteTime.process_tracker = setInterval( "$.fn.cuteTime.update_cuteness()", refresh_rate );
-			}
-		} else { 
-			// ignore this call; auto-refresh is already running!!
-		}
+        clearInterval($.fn.cuteTime.process_tracker);
+		$.fn.cuteTime.process_tracker = setInterval(
+            $.proxy($.fn.cuteTime.update_cuteness, this),
+            refresh_rate);
 		return this;
 	};
 
 
- 	/**********************************************************************************
+    /**********************************************************************************
 
 		FUNCTION
 			cuteTime.update_cuteness
@@ -357,7 +355,7 @@
 			other_time = get_time_value(curr_this);
 			curr_this.html(get_cuteness(right_now - other_time));
 		});
-	}
+	};
 
 
 	/**********************************************************************************
@@ -370,12 +368,8 @@
 
 	**********************************************************************************/
 	$.fn.cuteTime.stop_cuteness = function() {
-		if ($.fn.cuteTime.process_tracker != null) {
-			clearInterval($.fn.cuteTime.process_tracker);
-			$.fn.cuteTime.process_tracker = null;
-		} else {
-			// ignore this call; there is nothing to stop!!
-		}
+		clearInterval($.fn.cuteTime.process_tracker);
+		$.fn.cuteTime.process_tracker = null;
 		
 		return this;
 	};
@@ -411,21 +405,21 @@
 
 		jQuery.each(time_ranges, function(i, timespan) {
 			if (i < time_ranges.length-1) {
-				if ((	time_difference		>=		timespan['bound']) &&
-					(	time_difference		<		time_ranges[i+1]['bound'])) {
-					if (timespan['unit_size'] > 0) {
-						calculated_time = Math.floor(time_difference / timespan['unit_size']);
+				if ((	time_difference		>=		timespan.bound) &&
+					(	time_difference		<		time_ranges[i+1].bound)) {
+					if (timespan.unit_size > 0) {
+						calculated_time = Math.floor(time_difference / timespan.unit_size);
 					} else {
 						calculated_time = '';
 					}
 
 					// allow for inline replacement
-					pre_calculated_time = timespan['cuteness'].replace(/%CT%/, calculated_time);
+					pre_calculated_time = timespan.cuteness.replace(/%CT%/, calculated_time);
 					
-					if (pre_calculated_time == timespan['cuteness']) {
+					if (pre_calculated_time == timespan.cuteness) {
 						// nothing was replaced
 						// prepend the value
-						cute_time = calculated_time + timespan['cuteness'];
+						cute_time = calculated_time + timespan.cuteness;
 						
 					} else {
 						// inline replacement occurred
@@ -440,7 +434,7 @@
 		});
 
 		// something is wrong with the time
-		if (cute_time == '') {
+		if (cute_time === '') {
 			cute_time = '2 pookies ago'; // IMPORTANT: ALWAYS BE CUTE!!! 
 		}
 
@@ -463,8 +457,8 @@
 	function date_value(the_date) {
 	
 		var the_value;
-	
-		if ((new_date = toISO8601(the_date)) != null) {
+	    var new_date = toISO8601(the_date);
+		if (new_date !== null) {
 			the_value = new_date.valueOf();
 		} else {
 		
@@ -508,8 +502,8 @@
 				Complete date plus hours, minutes, seconds and a decimal fraction of a second
 				  YYYY-MM-DDThh:mm:ss.sTZD (eg 1997-07-16T19:20:30.45+01:00)
 			
-			  	Formatted REGEXP used within...
-			  	
+                Formatted REGEXP used within...
+
 					/^(\d{4})(
 					    (-(\d{2})
 					        (-(\d{2})
@@ -527,16 +521,16 @@
 					
 		NOTE
 			String.match() returns:
-				in FireFox, 			void(0) 
-				in Internet Explorer, 	"" <-- empty string
+                in FireFox,             void(0) 
+                in Internet Explorer,   "" <-- empty string
 			... for unmatched elements within the array
 			
 	**********************************************************************************/
 	function toISO8601(the_date){
 	
-		var iso_date = the_date.match(/^(\d{4})((-(\d{2})(-(\d{2})(T(\d{2}):(\d{2})(:(\d{2})(.(\d+))?)?(Z|(([+-])((\d{2}):(\d{2})))))?)?)?)$/);
+        var iso_date = the_date.match(/^(\d{4})((-(\d{2})(-(\d{2})(T(\d{2}):(\d{2})(:(\d{2})(.(\d+))?)?(Z|(([+-])((\d{2}):(\d{2})))))?)?)?)$/);
 		
-		if (iso_date != null) {
+		if (iso_date !== null) {
 			var new_date = new Date();
 			var TZ_hour_offset = 0;
 			var TZ_minute_offset = 0;
@@ -560,7 +554,7 @@
 					
 					if (!isEmpty(iso_date[8])) {
 						new_date.setUTCHours(iso_date[8] - TZ_hour_offset);
-						new_date.setUTCMinutes(iso_date[9] - TZ_minute_offset)
+						new_date.setUTCMinutes(iso_date[9] - TZ_minute_offset);
 						if (!isEmpty(iso_date[11])) {
 							new_date.setUTCSeconds(iso_date[11]);
 							if (!isEmpty(iso_date[13])) {
@@ -591,7 +585,7 @@
 
 	**********************************************************************************/
 	function isEmpty( inputStr ) { 
-		if ( null == inputStr || "" == inputStr ) { 
+		if ( null === inputStr || '' === inputStr ) { 
 			return true; 
 		} 
 		
@@ -624,13 +618,13 @@
 		var time_value = Number.NaN;
 
 		var time_string = get_cutetime_attr(obj); // returns string or NULL
-		if (time_string != null) {
+		if (time_string !== null) {
 			time_value = date_value(time_string);
 		}
 
 		if (isNaN(time_value)) {
 			time_string = get_object_text(obj);
-			if (time_string != null) {
+			if (time_string !== null) {
 				time_value = date_value(time_string);
 			}
 		}
@@ -660,7 +654,7 @@
 	function get_cutetime_attr(obj) {
 		var return_value = obj.attr(TS_ATTR);
 
-		if (return_value != undefined) {
+		if (return_value !== undefined) {
 			return return_value;
 		} else {
 			return null;
