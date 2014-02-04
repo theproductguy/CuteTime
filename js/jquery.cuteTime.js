@@ -3,8 +3,8 @@
 	jQuery.cuteTime
 
 	Author Jeremy Horn
-	Version 1.1.3
-	Date: 4/6/2010
+	Version 1.1.4
+	Date: 5/3/2011
 
 	Copyright (c) 2009 Jeremy Horn- jeremydhorn(at)gmail(dot)c0m | http://tpgblog.com
 	Dual licensed under MIT and GPL.
@@ -111,7 +111,7 @@
 						
 							e.g. "it was %CT% hours ago"   
 			
-			unit_size:	the divisor to apply to the calculated time difference; if unit_size > 0
+			unit_size:	the divisor to apply to the calculated time difference; if unit_size != 0
 						then a number value is prepended to the cuteness string as calculated by
 						time_difference / unit_size
 							e.g. 4 hours ago
@@ -276,10 +276,31 @@
 
 	**********************************************************************************/
 	$.fn.cuteTime.settings = {
-		refresh: -1,					// time in milliseconds before next refresh of page data; -1 == no refresh
+		refresh: -1,	// time in milliseconds before next refresh of page data; -1 == no refresh
 		time_ranges: [
-			{bound: NEG_INF,			// IMPORANT: bounds MUST be in ascending order, from negative infinity to positive infinity
-					cuteness: 'the future!',		unit_size: 0},
+            // ranges are matched to the range whose bound is LOWER than the
+            // time difference. This makes the logic for matching future dates
+            // confusing since they will have a negative time difference.  This
+            // means that the cuteness and unit_size for negative dates must be
+            // shifted back one range each.
+			{bound: NEG_INF,
+					cuteness: 'in %CT% years',		unit_size: -60 * 1000 * 60 * 24 * 30 * 12},
+			{bound: -60 * 1000 * 60 * 24 * 30 * 12 * 2, 
+					cuteness: 'next year',			unit_size: 0},
+			{bound: -60 * 1000 * 60 * 24 * 30 * 12, 
+					cuteness: 'in %CT% days',		unit_size: -60 * 1000 * 60 * 24},
+			{bound: -60 * 1000 * 60 * 24 * 2, 
+					cuteness: 'in %CT% hours',		unit_size: -60 * 1000 * 60},
+			{bound: -60 * 1000 * 60 * 2, 
+					cuteness: 'in an hour',		    unit_size: 0},
+			{bound: -60 * 1000 * 60, 
+					cuteness: 'in %CT% minutes',	unit_size: -60 * 1000},
+			{bound: -60 * 1000 * 2, 
+					cuteness: 'in a minute',		unit_size: 0},
+			{bound: -60 * 1000, 
+					cuteness: 'in a few seconds',	unit_size: 0},
+			{bound: -20 * 1000, 
+					cuteness: 'just now',			unit_size: 0},
 			{bound: 0, 
 					cuteness: 'just now',			unit_size: 0},
 			{bound: 20 * 1000, 
@@ -413,7 +434,7 @@
 			if (i < time_ranges.length-1) {
 				if ((	time_difference		>=		timespan['bound']) &&
 					(	time_difference		<		time_ranges[i+1]['bound'])) {
-					if (timespan['unit_size'] > 0) {
+					if (timespan['unit_size'] != 0) {
 						calculated_time = Math.floor(time_difference / timespan['unit_size']);
 					} else {
 						calculated_time = '';
