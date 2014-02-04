@@ -3,8 +3,8 @@
 	jQuery.cuteTime
 
 	Author Jeremy Horn
-	Version 1.1.3
-	Date: 4/6/2010
+	Version 1.1.4
+	Date: 4/19/2010
 
 	Copyright (c) 2009 Jeremy Horn- jeremydhorn(at)gmail(dot)c0m | http://tpgblog.com
 	Dual licensed under MIT and GPL.
@@ -56,7 +56,7 @@
 
 	METHODS
 
-		When initialized the cuteTime variable either updates or assigns the TS_ATTR
+		When initialized the cuteTime variable either updates or assigns the ts_attr
 		attribute to the provided objects.  Method implementation supports chaining and 
 		returns jQuery object.  
 
@@ -169,7 +169,6 @@
 	// CONSTANTS
 	var NEG_INF = Number.NEGATIVE_INFINITY;
 	var POS_INF = Number.POSITIVE_INFINITY;
-	var TS_ATTR	= 'data-timestamp';
 
 	/**********************************************************************************
 
@@ -276,6 +275,7 @@
 
 	**********************************************************************************/
 	$.fn.cuteTime.settings = {
+		ts_attr: 'data-timestamp',
 		refresh: -1,					// time in milliseconds before next refresh of page data; -1 == no refresh
 		time_ranges: [
 			{bound: NEG_INF,			// IMPORANT: bounds MUST be in ascending order, from negative infinity to positive infinity
@@ -462,7 +462,7 @@
 	**********************************************************************************/
 	function date_value(the_date) {
 	
-		var the_value;
+		var the_value, new_date;
 	
 		if ((new_date = toISO8601(the_date)) != null) {
 			the_value = new_date.valueOf();
@@ -505,6 +505,8 @@
 				  YYYY-MM-DDThh:mmTZD (eg 1997-07-16T19:20+01:00)
 				Complete date plus hours, minutes and seconds:
 				  YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)
+				Complete date plus hours, minutes and seconds in DATE_ISO8601 format from PHP:
+				  YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+0100)
 				Complete date plus hours, minutes, seconds and a decimal fraction of a second
 				  YYYY-MM-DDThh:mm:ss.sTZD (eg 1997-07-16T19:20:30.45+01:00)
 			
@@ -518,7 +520,7 @@
 					                    (.(\d+))?
 					                )?
 					                (Z|(
-					                    ([+-])((\d{2}):(\d{2}))
+					                    ([+-])((\d{2}):?(\d{2}))
 					                ))
 					            )?
 					        )?
@@ -534,7 +536,7 @@
 	**********************************************************************************/
 	function toISO8601(the_date){
 	
-		var iso_date = the_date.match(/^(\d{4})((-(\d{2})(-(\d{2})(T(\d{2}):(\d{2})(:(\d{2})(.(\d+))?)?(Z|(([+-])((\d{2}):(\d{2})))))?)?)?)$/);
+		var iso_date = the_date.match(/^(\d{4})((-(\d{2})(-(\d{2})(T(\d{2}):(\d{2})(:(\d{2})(.(\d+))?)?(Z|(([+-])((\d{2}):?(\d{2})))))?)?)?)$/);
 		
 		if (iso_date != null) {
 			var new_date = new Date();
@@ -658,7 +660,7 @@
 
 	**********************************************************************************/
 	function get_cutetime_attr(obj) {
-		var return_value = obj.attr(TS_ATTR);
+		var return_value = obj.attr($.fn.cuteTime.c_settings.ts_attr);
 
 		if (return_value != undefined) {
 			return return_value;
@@ -682,7 +684,7 @@
 	**********************************************************************************/
 	function set_cutetime_attr(attr, obj) {
 		// assume valid attr(ibute) value
-		obj.attr(TS_ATTR, attr);
+		obj.attr($.fn.cuteTime.c_settings.ts_attr, attr);
 	}
 
 
